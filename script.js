@@ -10,6 +10,10 @@ async function drawAlignmentMap() {
         .style("overflow", "hidden")
         .append("g").attr("id", "classOverviewGr")
 
+    console.log("svg")
+
+    console.log(svg)
+
     let contourGroup = svg.append("g")
 
     let viewX = 0, viewY = 0;
