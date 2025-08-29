@@ -292,8 +292,72 @@ async function drawAlignmentMap() {
 
     svg.call(zoom);
     drawContours(label,currentGridSize, [0, 1], [0, 1]);
-    // this.drawPoints(data2,context,defaultTransform);
+    drawPoints(data2,context,defaultTransform);
 
 }
+
+function drawPoints(data2,context,transform){
+    context.clearRect(0, 0, 1025, 1025);
+        // console.log("clean",currentGridSize)
+    // let grid = Math.max(1, Math.floor(1024 / 32));
+    let grid = Math.max(1, Math.floor(1024 / 16));
+        // console.log(grid)
+        // console.log("width",canvas.width)
+        // console.log(transform.x,transform.y)
+    let zoomCenterX = (1025 / 2 - transform.x) / transform.k;
+    let zoomCenterY = (1025 / 2 - transform.y) / transform.k;
+    let extent = d3.extent(data2.map(d => d.score)); 
+        // console.log(extent)
+        // console.log(extent[0])
+    // console.log(extent[1])
+    let color = d3.scaleSequential(d3.interpolateRdYlBu).domain([0.3278125, 0.19]);
+    // console.log("data2",data2)
+    data2.forEach((d, i) => {
+        // coco
+        // let x = (grid+5)*(parseFloat(d["x"]))+530;
+        // let y = (grid+31)*(-parseFloat(d["y"]))+480;
+        let x = (grid+10)*(parseFloat(d["x"]))+402;
+        let y = (grid+5.78)*(-parseFloat(d["y"]))+490;
+        // let x = (grid-2)*(parseFloat(d["x"]))+560;
+        // let y = (grid-3.5)*(-parseFloat(d["y"]))+435;
+
+        // 计算相对画布中心的偏移
+        let dx = x - zoomCenterX;
+        let dy = y - zoomCenterY;
+
+        x = 1025 / 2 + dx * transform.k;
+        y = 1025 / 2 + dy * transform.k;
+
+        let radius = 3
+        // if(this.highlightedPoint && d["im_path"] === this.highlightedPoint.im_path)
+        //     radius = 8
+
+        context.fillStyle = color(d["score"]);
+        context.strokeStyle = "rgba(128, 128, 128, 0.5)";
+        context.lineWidth = 0.6; // 边框宽度
+
+                // 绘制圆形（点）
+        context.beginPath();
+        // context.fillRect(x - radius, y - radius, 2*radius, 2*radius);
+
+        context.arc(x, y, radius, 0, 2 * Math.PI); // 绘制圆
+        context.fill(); // 填充颜色
+        context.stroke(); // 绘制边框
+    });
+    // console.log("1",this.drawnRectangles)
+    // if(this.drawnRectangles.length){
+    //     context.strokeStyle = "black";
+    //     context.strokeRect(this.drawnRectangles[0].x, this.drawnRectangles[0].y, this.drawnRectangles[0].width, this.drawnRectangles[0].height);
+    // }
+
+}
+
+// function setPoint(){
+//     this.showPoint = !this.showPoint;
+//     const canvas = document.querySelector("canvas"); // 获取 canvas
+//     if (canvas) {
+//         canvas.style.display = this.showPoint ? "block" : "none"; 
+//     }
+// }
 
 drawAlignmentMap();
