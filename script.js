@@ -16,12 +16,12 @@ function drawPoints(data2,context,transform){
     // console.log("data2",data2)
     data2.forEach((d, i) => {
         // coco
-        // let x = (grid+5)*(parseFloat(d["x"]))+530;
-        // let y = (grid+31)*(-parseFloat(d["y"]))+480;
-        let x = (grid+10)*(parseFloat(d["x"]))+402;
-        let y = (grid+5.78)*(-parseFloat(d["y"]))+490;
-        // let x = (grid-2)*(parseFloat(d["x"]))+560;
-        // let y = (grid-3.5)*(-parseFloat(d["y"]))+435;
+
+        // let x = (grid+10)*(parseFloat(d["x"]))+402;
+        // let y = (grid+5.78)*(-parseFloat(d["y"]))+490;
+        let x = (grid+10)*(parseFloat(d["x"]))//+402;
+        let y = (grid+5.78)*(-parseFloat(d["y"]))//+490;
+
 
         // 计算相对画布中心的偏移
         let dx = x - zoomCenterX;
