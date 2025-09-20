@@ -350,6 +350,7 @@ async function drawAlignmentMap() {
             // }
 
             contourGroup.attr("transform", event.transform);
+            pointGroup.attr("transform", event.transform);
             // drawPoints(data2,context,event.transform)
 
         });
