@@ -240,8 +240,8 @@ async function drawAlignmentMap() {
             .duration(100) 
             .ease(d3.easeLinear) 
 
-        // pointGroup.selectAll(".circle")
-        d3.select("#points")
+        pointGroup.selectAll(".circle")
+        // d3.select("#points")
             .data(data2)
             .enter()
             .append("circle")
