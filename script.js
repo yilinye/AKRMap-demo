@@ -243,7 +243,7 @@ async function drawAlignmentMap() {
         // pointGroup.selectAll(".circle")
         d3.select("#points")
             .append("circle")
-            .data(data2)
+            .enter(data2)
             .attr("cx", (d) => {
                 return d.x*width
             })
@@ -251,7 +251,7 @@ async function drawAlignmentMap() {
                 return d.y*height
             })
             .attr("r", 3)
-            .attr("fill", (d) => {
+            .style("fill", (d) => {
                 const res = color(d.score)
                 return res
             })
