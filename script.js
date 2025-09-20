@@ -71,6 +71,7 @@ async function drawAlignmentMap() {
     console.log(svg)
 
     let contourGroup = svg.append("g")
+    let pointGroup   = svg.append("g").attr("id", "points");
 
     let viewX = 0, viewY = 0;
     // let viewSize = 512;
@@ -79,17 +80,6 @@ async function drawAlignmentMap() {
     let label = 1;
     // let currentGridSize = 64;
     let currentGridSize = 100;
-    
-    // const contourFiles = {
-    //     1: "/contour_values_hps64.csv",
-    //     2: "/contour_values_hps256.csv",
-    //     3: "/contour_values_hps1024.csv",
-    //     4: "/contour_values_hps1024k2.csv",
-    //     5: "/contour_values_hps1024k4.csv",
-    //     6: "/contour_values_hps1024k6.csv",
-    //     7: "/contour_values_hps1024k8.csv",
-
-    // };
 
     const contourFiles = {
         1: "data/HPD_HPSv2_100_zi_output.csv",
@@ -112,7 +102,8 @@ async function drawAlignmentMap() {
         console.log("四叉树初始化完成", quadtree);
     }
 
-    let data1 = await d3.csv("data/hps_diffusiondb_merged.csv");
+    // let data1 = await d3.csv("data/hps_diffusiondb_merged.csv");
+    let data1 = await d3.csv("data/HPD_HPS_scatterplot_samples.csv");
 
     await loadAllContours(); 
 
@@ -249,6 +240,22 @@ async function drawAlignmentMap() {
             .duration(100) 
             .ease(d3.easeLinear) 
 
+        pointGroup.selectAll(".circle")
+            .append("circle")
+            .data(data2)
+            .attr("cx", (d) => {
+                return d.x*width
+            })
+            .attr("cy", (d) => {
+                return d.y*height
+            })
+            .attr("r", 3)
+            .attr("fill", (d) => {
+                const res = color(d.score)
+                return res
+            })
+
+
             
     }
 
@@ -291,38 +298,31 @@ async function drawAlignmentMap() {
                 newGridSize = 1000;
                 label = 4;
             }
-            // else if (zoomLevel < 7) {
-            //     newGridSize = 1024;
-            //     label = 5;
-            // }else if (zoomLevel <= 13) {
-            //     newGridSize = 1024;
-            //     label = 6;
+
+// comment out the multilayer to debug
+
+            // if (currentGridSize !== newGridSize) {
+
+            //     // let newSize = 512 / zoomLevel;
+            //     let newSize = 1000 / zoomLevel;
+            //     let newX = -event.transform.x * (newSize / size);
+            //     let newY = -event.transform.y * (newSize / size);
+
+            //     viewX = newX;
+            //     viewY = newY;
+            //     viewSize = newSize;
+            //     currentGridSize = newGridSize;
+            //     currentZoomLevel = zoomLevel;
+
+            //     requestAnimationFrame(() => {
+            //         drawContours(label,currentGridSize, [viewX, viewX + viewSize], [viewY, viewY + viewSize]);
+
+
+            //     });
             // }
-            // else if (zoomLevel <= 25) {
-            //     newGridSize = 1024;
-            //     label = 7;
-            // }
 
+// comment out the multilayer to debug
 
-            if (currentGridSize !== newGridSize) {
-
-                // let newSize = 512 / zoomLevel;
-                let newSize = 1000 / zoomLevel;
-                let newX = -event.transform.x * (newSize / size);
-                let newY = -event.transform.y * (newSize / size);
-
-                viewX = newX;
-                viewY = newY;
-                viewSize = newSize;
-                currentGridSize = newGridSize;
-                currentZoomLevel = zoomLevel;
-
-                requestAnimationFrame(() => {
-                    drawContours(label,currentGridSize, [viewX, viewX + viewSize], [viewY, viewY + viewSize]);
-
-
-                });
-            }
             // if (currentGridSize == 1024) {
 
             //     let newSize = 512 / zoomLevel;
@@ -342,13 +342,13 @@ async function drawAlignmentMap() {
             // }
 
             contourGroup.attr("transform", event.transform);
-            drawPoints(data2,context,event.transform)
+            // drawPoints(data2,context,event.transform)
 
         });
 
     svg.call(zoom);
     drawContours(label,currentGridSize, [0, 1], [0, 1]);
-    drawPoints(data2,context,defaultTransform);
+    // drawPoints(data2,context,defaultTransform);
 
 }
 
