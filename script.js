@@ -242,8 +242,9 @@ async function drawAlignmentMap() {
 
         // pointGroup.selectAll(".circle")
         d3.select("#points")
+            .data(data2)
+            .enter()
             .append("circle")
-            .enter(data2)
             .attr("cx", (d) => {
                 return d.x*width
             })
