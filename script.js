@@ -252,16 +252,16 @@ async function drawAlignmentMap() {
                 return (1-d.y)*height
             })
             .attr("r", 3)
-            // .style("fill", (d) => {
+            .style("fill", (d) => {
+                // const res = color(Number(d.score))
+                // console.log(Number(d.score))
+                return color(100*Number(d.score))
+            })
+            // .attr("fill", (d) => {
             //     // const res = color(Number(d.score))
             //     console.log(Number(d.score))
             //     return color(Number(d.score))
             // })
-            .attr("fill", (d) => {
-                // const res = color(Number(d.score))
-                console.log(Number(d.score))
-                return color(Number(d.score))
-            })
 
 
             
