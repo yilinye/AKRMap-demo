@@ -249,11 +249,11 @@ async function drawAlignmentMap() {
                 return d.x*width
             })
             .attr("cy", (d) => {
-                return d.y*height
+                return (1-d.y)*height
             })
             .attr("r", 3)
             .style("fill", (d) => {
-                const res = color(d.score)
+                const res = color(Number(d.score))
                 return res
             })
 
