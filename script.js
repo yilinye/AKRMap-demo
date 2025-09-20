@@ -240,7 +240,8 @@ async function drawAlignmentMap() {
             .duration(100) 
             .ease(d3.easeLinear) 
 
-        pointGroup.selectAll(".circle")
+        // pointGroup.selectAll(".circle")
+        d3.select("#points")
             .append("circle")
             .data(data2)
             .attr("cx", (d) => {
@@ -268,12 +269,12 @@ async function drawAlignmentMap() {
         .scaleExtent([1, 16])  
         .on("zoom", (event) =>{
             let zoomLevel = event.transform.k;
-            console.log("当前缩放级别:", zoomLevel);
+            // console.log("当前缩放级别:", zoomLevel);
             currentTransform = event.transform;
             currentZoomLevel = zoomLevel;
             // console.log("!!",currentZoomLevel)
             let scaleThreshold = fibonacciLevels[Math.min(Math.floor(zoomLevel)-1,fibonacciLevels.length-1)];
-            console.log(scaleThreshold)
+            // console.log(scaleThreshold)
             // if(scaleThreshold==0){
             //     data2 = initPoints;
             // }else{
